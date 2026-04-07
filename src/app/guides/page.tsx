@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Debt & Personal Finance Guides | DebtHydra",
   description:
     "Plain-language guides about debt payoff strategies, budgeting, interest rates, and building savings. No jargon, no upsells.",
+  alternates: { canonical: "/guides" },
 };
 
 export default function GuidesPage() {

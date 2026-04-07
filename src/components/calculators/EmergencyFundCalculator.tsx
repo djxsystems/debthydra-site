@@ -1,23 +1,43 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { calculateEmergencyFund, formatCurrency, formatMonths } from "@/lib/calculators";
+import { trackCalculatorCompleted, trackCalculatorStarted } from "@/lib/analytics";
 import type { EmergencyFundResult } from "@/types";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import FormField from "@/components/ui/FormField";
 
 export default function EmergencyFundCalculator() {
-  const [targetBalance, setTargetBalance] = useState(10000);
-  const [monthlyContribution, setMonthlyContribution] = useState(300);
-  const [annualRate, setAnnualRate] = useState(4.5);
-  const [initialBalance, setInitialBalance] = useState(0);
+  const [targetBalance, setTargetBalance] = useState("10000");
+  const [monthlyContribution, setMonthlyContribution] = useState("300");
+  const [annualRate, setAnnualRate] = useState("4.5");
+  const [initialBalance, setInitialBalance] = useState("0");
   const [result, setResult] = useState<EmergencyFundResult | null>(null);
+  const hasTrackedStart = useRef(false);
+
+  function markStarted() {
+    if (hasTrackedStart.current) return;
+    hasTrackedStart.current = true;
+    trackCalculatorStarted("emergency_fund");
+  }
 
   function calculate() {
-    setResult(
-      calculateEmergencyFund(targetBalance, monthlyContribution, annualRate, initialBalance)
+    markStarted();
+    const parsedTargetBalance = parseFloat(targetBalance) || 0;
+    const parsedMonthlyContribution = parseFloat(monthlyContribution) || 0;
+    const calculation = calculateEmergencyFund(
+      parsedTargetBalance,
+      parsedMonthlyContribution,
+      parseFloat(annualRate) || 0,
+      parseFloat(initialBalance) || 0
     );
+    setResult(calculation);
+    trackCalculatorCompleted("emergency_fund", {
+      targetBalance: parsedTargetBalance,
+      monthlyContribution: parsedMonthlyContribution,
+      payoffMonths: calculation.months,
+    });
   }
 
   return (
@@ -32,7 +52,10 @@ export default function EmergencyFundCalculator() {
             type="number"
             min={0}
             value={targetBalance}
-            onChange={(e) => setTargetBalance(parseFloat(e.target.value) || 0)}
+            onChange={(e) => {
+              markStarted();
+              setTargetBalance(e.target.value);
+            }}
           />
           <FormField
             label="Monthly contribution"
@@ -41,7 +64,10 @@ export default function EmergencyFundCalculator() {
             type="number"
             min={0}
             value={monthlyContribution}
-            onChange={(e) => setMonthlyContribution(parseFloat(e.target.value) || 0)}
+            onChange={(e) => {
+              markStarted();
+              setMonthlyContribution(e.target.value);
+            }}
           />
           <FormField
             label="Current savings"
@@ -50,7 +76,10 @@ export default function EmergencyFundCalculator() {
             type="number"
             min={0}
             value={initialBalance}
-            onChange={(e) => setInitialBalance(parseFloat(e.target.value) || 0)}
+            onChange={(e) => {
+              markStarted();
+              setInitialBalance(e.target.value);
+            }}
           />
           <FormField
             label="Annual interest rate"
@@ -60,7 +89,10 @@ export default function EmergencyFundCalculator() {
             min={0}
             step={0.1}
             value={annualRate}
-            onChange={(e) => setAnnualRate(parseFloat(e.target.value) || 0)}
+            onChange={(e) => {
+              markStarted();
+              setAnnualRate(e.target.value);
+            }}
           />
         </div>
         <Button onClick={calculate} size="lg" className="mt-5">
@@ -126,7 +158,7 @@ export default function EmergencyFundCalculator() {
                             <td className="py-1.5">Year {Math.ceil(row.month / 12)}</td>
                             <td className="py-1.5">
                               {formatCurrency(
-                                Math.min(row.month, result.months) * monthlyContribution
+                                Math.min(row.month, result.months) * (parseFloat(monthlyContribution) || 0)
                               )}
                             </td>
                             <td className="py-1.5 text-green-600">

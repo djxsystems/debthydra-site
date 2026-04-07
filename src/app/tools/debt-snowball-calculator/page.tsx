@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Debt Snowball Calculator — Free Payoff Planner | DebtHydra",
   description:
     "Use the debt snowball method to pay off your debts smallest-balance first. Enter your debts and see a month-by-month payoff schedule.",
+  alternates: { canonical: "/tools/debt-snowball-calculator" },
 };
 
 const FAQS = [

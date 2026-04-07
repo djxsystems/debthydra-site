@@ -1,5 +1,4 @@
-const SITE_NAME = "DebtHydra";
-const SITE_URL = "https://debthydra.com";
+import { CONTACT_EMAIL, ORGANIZATION_NAME, SITE_NAME, SITE_URL } from "@/lib/site";
 
 export function websiteSchema() {
   return {
@@ -21,9 +20,9 @@ export function organizationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: SITE_NAME,
+    name: ORGANIZATION_NAME,
     url: SITE_URL,
-    logo: `${SITE_URL}/logo.png`,
+    email: CONTACT_EMAIL,
     sameAs: [],
   };
 }
@@ -54,7 +53,7 @@ export function calculatorSchema({
     },
     provider: {
       "@type": "Organization",
-      name: SITE_NAME,
+      name: ORGANIZATION_NAME,
       url: SITE_URL,
     },
   };
@@ -83,11 +82,13 @@ export function articleSchema({
   description,
   url,
   publishedAt,
+  updatedAt,
 }: {
   title: string;
   description: string;
   url: string;
   publishedAt: string;
+  updatedAt?: string;
 }) {
   return {
     "@context": "https://schema.org",
@@ -96,9 +97,14 @@ export function articleSchema({
     description,
     url: `${SITE_URL}${url}`,
     datePublished: publishedAt,
+    dateModified: updatedAt ?? publishedAt,
+    author: {
+      "@type": "Organization",
+      name: ORGANIZATION_NAME,
+    },
     publisher: {
       "@type": "Organization",
-      name: SITE_NAME,
+      name: ORGANIZATION_NAME,
       url: SITE_URL,
     },
   };

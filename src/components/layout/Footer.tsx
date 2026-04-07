@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CONTACT_EMAIL } from "@/lib/site";
 
 const TOOL_LINKS = [
   { href: "/tools/debt-snowball-calculator", label: "Debt Snowball Calculator" },
@@ -25,7 +26,6 @@ export default function Footer() {
     <footer className="bg-gray-900 text-gray-400">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-          {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-3">
               <div className="w-7 h-7 rounded bg-teal-600 flex items-center justify-center text-white font-bold text-xs">
@@ -35,12 +35,17 @@ export default function Footer() {
                 Debt<span className="text-teal-400">Hydra</span>
               </span>
             </div>
-            <p className="text-sm leading-relaxed">
+            <p className="text-sm leading-relaxed mb-3">
               Free tools and plain-language guides to help you understand and pay off debt faster.
+            </p>
+            <p className="text-sm">
+              Questions or corrections?{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`} className="text-teal-300 hover:text-teal-200 underline">
+                {CONTACT_EMAIL}
+              </a>
             </p>
           </div>
 
-          {/* Calculators */}
           <div>
             <h3 className="text-white font-semibold text-sm mb-3 uppercase tracking-wide">
               Calculators
@@ -56,7 +61,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Guides */}
           <div>
             <h3 className="text-white font-semibold text-sm mb-3 uppercase tracking-wide">
               Guides
@@ -72,7 +76,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Site */}
           <div>
             <h3 className="text-white font-semibold text-sm mb-3 uppercase tracking-wide">Site</h3>
             <ul className="space-y-2">
@@ -88,7 +91,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
-          <p>© {new Date().getFullYear()} DebtHydra. Educational purposes only.</p>
+          <p>&copy; {new Date().getFullYear()} DebtHydra. Educational purposes only.</p>
           <p className="text-center sm:text-right max-w-md">
             DebtHydra provides estimates for educational purposes and is{" "}
             <strong className="text-gray-400">not financial advice</strong>. Always consult a

@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Free Debt Calculators | DebtHydra",
   description:
     "Free debt payoff calculators — snowball, avalanche, auto loan, and emergency fund. Enter your numbers and get a real payoff plan in seconds.",
+  alternates: { canonical: "/tools" },
 };
 
 const TOOLS = [
@@ -39,6 +40,14 @@ const TOOLS = [
       "See how long it'll take to hit your savings target with monthly contributions and compound interest from a HYSA.",
     emoji: "🛡️",
     tag: null,
+  },
+  {
+    href: "/tools/compare",
+    title: "Snowball vs. Avalanche Comparison",
+    description:
+      "Can't decide? Enter your debts once and see both methods side by side — payoff time, total interest, and the exact dollar difference.",
+    emoji: "⚖️",
+    tag: "New",
   },
 ];
 

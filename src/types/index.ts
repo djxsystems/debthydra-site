@@ -62,6 +62,7 @@ export interface GuideMetadata {
   title: string;
   description: string;
   publishedAt: string;
+  updatedAt: string;
   readingTime: string;
   tags: string[];
   relatedTools?: string[];

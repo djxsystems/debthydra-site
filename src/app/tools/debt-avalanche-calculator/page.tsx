@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Debt Avalanche Calculator — Pay Less Interest | DebtHydra",
   description:
     "The avalanche method attacks your highest-interest debt first, saving the most money overall. Calculate your debt-free date and total interest.",
+  alternates: { canonical: "/tools/debt-avalanche-calculator" },
 };
 
 const FAQS = [

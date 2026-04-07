@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Emergency Fund Calculator — How Long to Save? | DebtHydra",
   description:
     "Find out how long it will take to build an emergency fund with your monthly contributions and a high-yield savings account.",
+  alternates: { canonical: "/tools/emergency-fund-calculator" },
 };
 
 const FAQS = [

@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Auto Loan Calculator — Monthly Payment & Total Cost | DebtHydra",
   description:
     "Calculate your exact monthly car payment, total interest, and full amortisation schedule. Know the real cost before you sign.",
+  alternates: { canonical: "/tools/auto-loan-calculator" },
 };
 
 const FAQS = [

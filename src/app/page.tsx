@@ -2,11 +2,15 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getAllGuides } from "@/lib/guides";
 import GuideCard from "@/components/guides/GuideCard";
+import JsonLd from "@/components/JsonLd";
+import { organizationSchema, websiteSchema } from "@/lib/jsonld";
+import { CONTACT_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "DebtHydra — Free Debt Payoff Calculators & Guides",
+  title: "DebtHydra - Free Debt Payoff Calculators & Guides",
   description:
-    "Practical, free tools to help you pay off credit cards, auto loans, and other debt faster. No fluff, no sales pitches — just clear math and honest advice.",
+    "Practical, free tools to help you pay off credit cards, auto loans, and other debt faster. No fluff, no sales pitches - just clear math and honest advice.",
+  alternates: { canonical: "/" },
 };
 
 const TOOLS = [
@@ -34,6 +38,12 @@ const TOOLS = [
     description: "Figure out how long it'll take to build a safety net while paying off debt.",
     emoji: "🛡️",
   },
+  {
+    href: "/tools/compare",
+    title: "Snowball vs. Avalanche",
+    description: "Run your debts through both methods at once and see exactly what you'd save.",
+    emoji: "⚖️",
+  },
 ];
 
 export default function HomePage() {
@@ -41,7 +51,7 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Hero */}
+      <JsonLd data={[organizationSchema(), websiteSchema()]} />
       <section className="bg-gradient-to-br from-teal-700 to-teal-900 text-white py-20 px-4">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl sm:text-5xl font-bold leading-tight mb-4">
@@ -69,7 +79,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Tools */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Free Calculators</h2>
@@ -94,48 +103,51 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Why DebtHydra */}
       <section className="bg-white py-16 px-4 border-y border-gray-100">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Debt is confusing. We make it simple.
-          </h2>
-          <p className="text-gray-600 leading-relaxed max-w-2xl mx-auto mb-10">
-            There&apos;s a ton of financial advice out there — much of it is trying to sell you
-            something. DebtHydra exists for one reason: to give you clear, honest math so you can
-            make smart decisions about your money. No products, no upsells.
-          </p>
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Why Trust DebtHydra</h2>
+            <p className="text-gray-600 leading-relaxed max-w-3xl mx-auto">
+              DebtHydra is an independent educational site built to make debt math easier to
+              understand. We aim to explain payoff tradeoffs clearly, disclose limitations plainly,
+              and keep the tools usable without forcing people into a signup flow.
+            </p>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
-            {[
-              {
-                title: "Built for real people",
-                body: "Plain English, not finance-speak. If you're stressed about debt, you shouldn't need a spreadsheet degree to understand your options.",
-              },
-              {
-                title: "Accurate calculations",
-                body: "Our calculators use the same math that banks use. You'll see real payoff timelines and actual interest costs.",
-              },
-              {
-                title: "No account needed",
-                body: "No email required. No tracking. Just open a calculator, enter your numbers, and get your plan.",
-              },
-            ].map((item) => (
-              <div key={item.title} className="bg-slate-50 rounded-xl p-5">
-                <h3 className="font-semibold text-gray-900 mb-2">{item.title}</h3>
-                <p className="text-sm text-gray-600 leading-relaxed">{item.body}</p>
-              </div>
-            ))}
+            <div className="bg-slate-50 rounded-xl p-5">
+              <h3 className="font-semibold text-gray-900 mb-2">Transparent methodology</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                The calculators use standard amortization and payoff formulas. They are educational
+                estimates, not lender-issued payoff quotes.
+              </p>
+            </div>
+            <div className="bg-slate-50 rounded-xl p-5">
+              <h3 className="font-semibold text-gray-900 mb-2">Human-run and reachable</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                DebtHydra is actively maintained, and readers can send questions or corrections to{" "}
+                <a href={`mailto:${CONTACT_EMAIL}`} className="text-teal-700 underline">
+                  {CONTACT_EMAIL}
+                </a>
+                .
+              </p>
+            </div>
+            <div className="bg-slate-50 rounded-xl p-5">
+              <h3 className="font-semibold text-gray-900 mb-2">Reviewed and updated</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Guides show published or updated dates so readers can judge freshness, especially on
+                topics like rates, payoff timelines, and budgeting assumptions.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Recent guides */}
       {guides.length > 0 && (
         <section className="py-16 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="flex items-center justify-between mb-8">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-1">Latest Guides</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-1">Featured Guides</h2>
                 <p className="text-gray-500 text-sm">
                   Practical reads to help you make sense of your debt situation.
                 </p>
@@ -156,10 +168,9 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* Disclaimer callout */}
       <section className="bg-amber-50 border-t border-amber-100 py-6 px-4">
         <div className="max-w-3xl mx-auto text-center text-sm text-amber-800">
-          <strong>Heads up:</strong> DebtHydra provides estimates for educational purposes only —
+          <strong>Heads up:</strong> DebtHydra provides estimates for educational purposes only -
           not financial, legal, or tax advice. Numbers may differ from your lender&apos;s actual
           terms.{" "}
           <Link href="/disclaimer" className="underline hover:text-amber-900">

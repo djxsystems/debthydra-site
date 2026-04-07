@@ -1,21 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { calculateAutoLoan, formatCurrency } from "@/lib/calculators";
+import { trackCalculatorCompleted, trackCalculatorStarted } from "@/lib/analytics";
 import type { AutoLoanResult } from "@/types";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import FormField from "@/components/ui/FormField";
 
 export default function AutoLoanCalculator() {
-  const [loanAmount, setLoanAmount] = useState(25000);
-  const [interestRate, setInterestRate] = useState(6.9);
+  const [loanAmount, setLoanAmount] = useState("25000");
+  const [interestRate, setInterestRate] = useState("6.9");
   const [termMonths, setTermMonths] = useState(60);
   const [result, setResult] = useState<AutoLoanResult | null>(null);
   const [showSchedule, setShowSchedule] = useState(false);
+  const hasTrackedStart = useRef(false);
+
+  function markStarted() {
+    if (hasTrackedStart.current) return;
+    hasTrackedStart.current = true;
+    trackCalculatorStarted("auto_loan");
+  }
 
   function calculate() {
-    setResult(calculateAutoLoan(loanAmount, interestRate, termMonths));
+    markStarted();
+    const principal = parseFloat(loanAmount) || 0;
+    const calculation = calculateAutoLoan(principal, parseFloat(interestRate) || 0, termMonths);
+    setResult(calculation);
+    trackCalculatorCompleted("auto_loan", {
+      loanAmount: principal,
+      payoffMonths: termMonths,
+    });
   }
 
   return (
@@ -29,7 +44,10 @@ export default function AutoLoanCalculator() {
             type="number"
             min={0}
             value={loanAmount}
-            onChange={(e) => setLoanAmount(parseFloat(e.target.value) || 0)}
+            onChange={(e) => {
+              markStarted();
+              setLoanAmount(e.target.value);
+            }}
           />
           <FormField
             label="Annual interest rate"
@@ -39,13 +57,19 @@ export default function AutoLoanCalculator() {
             step={0.01}
             value={interestRate}
             hint="Check your loan offer or credit union rate."
-            onChange={(e) => setInterestRate(parseFloat(e.target.value) || 0)}
+            onChange={(e) => {
+              markStarted();
+              setInterestRate(e.target.value);
+            }}
           />
           <div className="flex flex-col gap-1">
             <label className="text-sm font-medium text-gray-700">Loan term</label>
             <select
               value={termMonths}
-              onChange={(e) => setTermMonths(parseInt(e.target.value))}
+              onChange={(e) => {
+                markStarted();
+                setTermMonths(parseInt(e.target.value));
+              }}
               className="rounded-lg border border-gray-200 bg-white py-2 px-3 text-sm text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
             >
               <option value={24}>24 months (2 years)</option>

@@ -1,7 +1,12 @@
 import Link from "next/link";
 import type { GuideMetadata } from "@/types";
+import { formatDisplayDate } from "@/lib/site";
 
 export default function GuideCard({ guide }: { guide: GuideMetadata }) {
+  const hasBeenUpdated = guide.updatedAt && guide.updatedAt !== guide.publishedAt;
+  const dateLabel = hasBeenUpdated ? "Updated" : "Published";
+  const dateValue = formatDisplayDate(hasBeenUpdated ? guide.updatedAt : guide.publishedAt);
+
   return (
     <Link
       href={`/guides/${guide.slug}`}
@@ -21,9 +26,11 @@ export default function GuideCard({ guide }: { guide: GuideMetadata }) {
         {guide.title}
       </h3>
       <p className="text-sm text-gray-500 leading-relaxed line-clamp-2 mb-3">{guide.description}</p>
-      <div className="flex items-center justify-between text-xs text-gray-400">
+      <div className="flex items-center justify-between gap-3 text-xs text-gray-400">
         <span>{guide.readingTime}</span>
-        <span>{guide.publishedAt}</span>
+        <span>
+          {dateLabel}: {dateValue}
+        </span>
       </div>
     </Link>
   );

@@ -64,3 +64,33 @@ body {
   font-style: italic;
   margin: 1.25rem 0;
 }
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  margin: 1.5rem 0;
+}
+
+.prose thead th {
+  background: #f1f5f9;
+  color: #0f172a;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.6rem 0.875rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.prose tbody td {
+  padding: 0.55rem 0.875rem;
+  color: #374151;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.prose tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.prose tbody tr:hover td {
+  background: #f8fafc;
+}
