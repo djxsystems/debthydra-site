@@ -1,0 +1,10 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="16" fill="#0F766E"/>
+  <!-- D: solid outer shape minus inner cutout -->
+  <path fill-rule="evenodd" fill="white"
+    d="M8 13 H22 C31 13 32 22 32 32 C32 42 31 51 22 51 H8 Z
+       M14 20 H20 C25 20 26 25 26 32 C26 39 25 44 20 44 H14 Z"/>
+  <!-- H: two vertical bars connected by a crossbar -->
+  <path fill="white"
+    d="M35 13 H41 V29 H49 V13 H55 V51 H49 V35 H41 V51 H35 Z"/>
+</svg>
