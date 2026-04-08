@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import AutoLoanCalculator from "@/components/calculators/AutoLoanCalculator";
+import CalculatorIntro from "@/components/tools/CalculatorIntro";
 import Card from "@/components/ui/Card";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
 import { calculatorSchema } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
-  title: "Auto Loan Calculator — Monthly Payment & Total Cost | DebtHydra",
+  title: "Auto Loan Calculator - Monthly Payment & Total Cost | DebtHydra",
   description:
     "Calculate your exact monthly car payment, total interest, and full amortisation schedule. Know the real cost before you sign.",
   alternates: { canonical: "/tools/auto-loan-calculator" },
@@ -59,18 +60,31 @@ export default function AutoLoanPage() {
       />
 
       <div className="max-w-4xl mx-auto px-4 py-10">
-        <div className="mb-6">
+        <div className="mb-4">
           <p className="text-sm text-teal-600 font-medium mb-1">
             <Link href="/tools" className="hover:underline">
               ← All Calculators
             </Link>
           </p>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Auto Loan Calculator</h1>
-          <p className="text-gray-500 max-w-xl">
-            See your monthly payment, total interest, and the full breakdown before committing to a
-            car loan.
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-700 mb-3">
+            Before-you-sign calculator
           </p>
         </div>
+
+        <CalculatorIntro
+          eyebrow="Auto Loan Calculator"
+          title="See the true cost of the loan, not just the monthly payment."
+          description="Dealer financing can make a long loan term feel affordable while quietly adding thousands in interest. This calculator helps you compare the tradeoff before you agree to the note."
+          bestFor="shopping car loans and term comparisons"
+          highlights={["Monthly payment", "Total interest", "Full amortization schedule"]}
+          asideTitle="What you’ll get"
+          asideBody={
+            <>
+              Test different rates and term lengths instantly. You’ll see how a lower payment can
+              still mean a much more expensive loan over time.
+            </>
+          }
+        />
 
         <AutoLoanCalculator />
 
@@ -102,11 +116,11 @@ export default function AutoLoanPage() {
             <ul className="space-y-2 text-sm text-gray-600">
               <li>
                 <strong className="text-gray-800">Down payment matters:</strong> A bigger down
-                payment reduces your principal, your payment, and the total interest you&apos;ll pay.
+                payment reduces your principal, your monthly payment, and total interest.
               </li>
               <li>
-                <strong className="text-gray-800">Dealer rate vs. credit union rate:</strong>{" "}
-                Dealership financing often adds a markup. Check your credit union or bank first.
+                <strong className="text-gray-800">Compare financing sources:</strong> Dealer rates
+                are not always the cheapest option. Check a credit union or bank too.
               </li>
               <li>
                 <strong className="text-gray-800">Gap insurance and add-ons:</strong> These get

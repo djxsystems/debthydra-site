@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import EmergencyFundCalculator from "@/components/calculators/EmergencyFundCalculator";
+import CalculatorIntro from "@/components/tools/CalculatorIntro";
 import Card from "@/components/ui/Card";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
 import { calculatorSchema } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
-  title: "Emergency Fund Calculator — How Long to Save? | DebtHydra",
+  title: "Emergency Fund Calculator - How Long to Save? | DebtHydra",
   description:
     "Find out how long it will take to build an emergency fund with your monthly contributions and a high-yield savings account.",
   alternates: { canonical: "/tools/emergency-fund-calculator" },
@@ -54,18 +55,31 @@ export default function EmergencyFundPage() {
       />
 
       <div className="max-w-4xl mx-auto px-4 py-10">
-        <div className="mb-6">
+        <div className="mb-4">
           <p className="text-sm text-teal-600 font-medium mb-1">
             <Link href="/tools" className="hover:underline">
               ← All Calculators
             </Link>
           </p>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Emergency Fund Calculator</h1>
-          <p className="text-gray-500 max-w-xl">
-            Building a safety net while you pay down debt is one of the smartest moves you can make.
-            See how long it takes to hit your goal.
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-700 mb-3">
+            Stability-first planning
           </p>
         </div>
+
+        <CalculatorIntro
+          eyebrow="Emergency Fund Calculator"
+          title="Build a cushion so one surprise expense doesn’t restart the debt cycle."
+          description="A starter emergency fund can be the difference between steady debt progress and sliding backward the next time life gets expensive. This calculator shows how quickly that cushion can grow."
+          bestFor="starter funds and HYSA planning"
+          highlights={["Savings timeline", "Interest earned", "Goal-based planning"]}
+          asideTitle="What you’ll get"
+          asideBody={
+            <>
+              Model your target, monthly contribution, and savings rate to estimate how long it
+              takes to hit your number and how much the account earns along the way.
+            </>
+          }
+        />
 
         <EmergencyFundCalculator />
 
